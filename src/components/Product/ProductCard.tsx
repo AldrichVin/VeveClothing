@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import type { Product } from '../../types/product'
+import { useCart } from '../../context/CartContext'
 
 interface ProductCardProps {
   readonly product: Product
@@ -8,10 +9,20 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const [hovered, setHovered] = useState(false)
+  const { addItem } = useCart()
 
   const displayImage = hovered && product.hover_image_url
     ? product.hover_image_url
     : product.image_url
+
+  const handleAddToCart = () => {
+    addItem({
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      image_url: product.image_url,
+    })
+  }
 
   return (
     <motion.article
@@ -31,15 +42,23 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           loading="lazy"
         />
         {product.is_new && (
-          <span className="absolute top-3 left-3 font-body text-[10px] font-light tracking-[0.2em] uppercase text-text-primary bg-white/90 px-2.5 py-1">
+          <span className="absolute top-3 left-3 font-body text-[9px] font-normal tracking-[0.2em] uppercase text-white bg-text-primary px-2.5 py-1">
             New
           </span>
         )}
+
+        {/* Add to bag — visible on hover */}
+        <button
+          onClick={handleAddToCart}
+          className="absolute bottom-0 left-0 w-full font-body text-[10px] font-normal tracking-[0.25em] uppercase text-white bg-text-primary/90 py-3 border-none cursor-pointer opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-text-primary"
+        >
+          Add to Bag
+        </button>
       </div>
-      <h3 className="font-body text-[12px] md:text-[13px] font-light tracking-[0.1em] text-text-primary mb-1">
+      <h3 className="font-body text-[12px] md:text-[13px] font-normal tracking-[0.05em] text-text-primary mb-1 group-hover:text-text-secondary transition-colors duration-300">
         {product.name}
       </h3>
-      <p className="font-body text-[11px] md:text-[12px] font-light text-text-secondary">
+      <p className="font-body text-[11px] md:text-[12px] font-light text-text-accent">
         Rp {product.price.toLocaleString('id-ID')}
       </p>
     </motion.article>
