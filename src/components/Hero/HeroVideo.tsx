@@ -1,7 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
-const VIDEO_SRC = 'https://cdn.midjourney.com/video/512b9f1b-00c0-4505-95c9-e880c8def602/2.mp4'
+const VIDEO_SRC = 'https://cdn.midjourney.com/video/7a586ee3-95e0-46f7-a5fa-f71b1ab0e1fe/0.mp4'
 const WATCHDOG_INTERVAL_MS = 1000
 
 export const HeroVideo = () => {
