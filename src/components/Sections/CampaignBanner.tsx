@@ -18,8 +18,13 @@ export const CampaignBanner = () => {
         className="absolute inset-0 flex items-center justify-center"
         style={{ y }}
       >
-        {/* Dark editorial background — replace with campaign image */}
-        <div className="absolute inset-0 bg-gradient-to-br from-bg-dark via-surface-dark to-bg-dark" />
+        <img
+          src="https://cdn.midjourney.com/20cfb63f-3dca-4d94-a4f3-8a26981ed1bd/0_2.png"
+          alt="The Linen Collection campaign"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Dark overlay for text legibility */}
+        <div className="absolute inset-0 bg-black/40" />
 
         <div className="relative z-10 text-center">
           <motion.div

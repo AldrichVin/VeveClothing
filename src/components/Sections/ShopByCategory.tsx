@@ -1,12 +1,20 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { CATEGORIES, CATEGORY_LABELS } from '../../types/product'
 import type { Category } from '../../types/product'
 
-const CATEGORY_STYLES: Record<Category, { bg: string; text: string }> = {
-  top: { bg: '#e8e3de', text: '#2a2a2a' },
-  bottom: { bg: '#d4cec8', text: '#1a1a1a' },
-  outerwear: { bg: '#2a2a2a', text: '#f0ece8' },
-  dress: { bg: '#c4bdb5', text: '#1a1a1a' },
+const CATEGORY_IMAGES: Record<Category, string> = {
+  top: 'https://cdn.midjourney.com/3e4df5b4-7ce4-419d-b43d-c4752de8d4ec/0_3.png',
+  bottom: '/images/cat-bottom.jpg',
+  outerwear: '/images/cat-outerwear.jpg',
+  dress: '/images/cat-dress.jpg',
+}
+
+const CATEGORY_FALLBACK_BG: Record<Category, string> = {
+  top: '#e8e3de',
+  bottom: '#d4cec8',
+  outerwear: '#2a2a2a',
+  dress: '#c4bdb5',
 }
 
 export const ShopByCategory = () => {
@@ -32,34 +40,45 @@ export const ShopByCategory = () => {
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {CATEGORIES.map((category, i) => {
-            const style = CATEGORY_STYLES[category]
-            return (
-              <motion.a
-                key={category}
-                href={`#${category}`}
-                className="group relative aspect-[3/4] overflow-hidden cursor-pointer block no-underline"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
+          {CATEGORIES.map((category, i) => (
+            <motion.div
+              key={category}
+              className="group relative aspect-[3/4] overflow-hidden cursor-pointer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
+            >
+              <Link
+                to={`/shop/${category}`}
+                className="block w-full h-full no-underline"
               >
-                <div
-                  className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105"
-                  style={{ backgroundColor: style.bg }}
+                {/* Category image — swap with Midjourney-generated photo */}
+                <img
+                  src={CATEGORY_IMAGES[category]}
+                  alt={CATEGORY_LABELS[category]}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  onError={(e) => {
+                    const target = e.currentTarget
+                    target.style.display = 'none'
+                    target.parentElement!.style.backgroundColor = CATEGORY_FALLBACK_BG[category]
+                  }}
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                {/* Fallback bg in case image hasn't loaded */}
+                <div
+                  className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105 -z-10"
+                  style={{ backgroundColor: CATEGORY_FALLBACK_BG[category] }}
+                />
+                {/* Gradient overlay for text legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent group-hover:from-black/60 transition-colors duration-500" />
                 <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                  <h3
-                    className="font-body text-[11px] md:text-[12px] font-normal tracking-[0.25em] uppercase"
-                    style={{ color: style.text }}
-                  >
+                  <h3 className="font-body text-[11px] md:text-[12px] font-normal tracking-[0.25em] uppercase text-white">
                     {CATEGORY_LABELS[category]}
                   </h3>
                 </div>
-              </motion.a>
-            )
-          })}
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
