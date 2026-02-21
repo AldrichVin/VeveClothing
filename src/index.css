@@ -2,11 +2,16 @@
 
 @theme {
   --color-bg: #ffffff;
-  --color-text-primary: #1a1a1a;
-  --color-text-secondary: #6b6b6b;
-  --color-text-accent: #999999;
-  --color-border: #e5e5e5;
-  --color-surface: #fafafa;
+  --color-bg-dark: #111111;
+  --color-bg-warm: #f6f3f0;
+  --color-text-primary: #111111;
+  --color-text-secondary: #555555;
+  --color-text-accent: #888888;
+  --color-text-muted: #b0b0b0;
+  --color-border: #e0e0e0;
+  --color-border-dark: #2a2a2a;
+  --color-surface: #f5f2ef;
+  --color-surface-dark: #1a1a1a;
   --font-brand: 'Cormorant Garamond', serif;
   --font-body: 'Montserrat', sans-serif;
 }
@@ -26,6 +31,6 @@ body {
 }
 
 ::selection {
-  background-color: rgba(26, 26, 26, 0.12);
+  background-color: rgba(17, 17, 17, 0.15);
   color: var(--color-text-primary);
 }
