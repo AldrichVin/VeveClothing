@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MobileMenu } from './MobileMenu'
 import { MegaMenu } from './MegaMenu'
@@ -48,12 +49,12 @@ export const Nav = () => {
           style={{ padding: '0 clamp(24px, 6vw, 120px)' }}
         >
           {/* Left: Logo */}
-          <a
-            href="/"
+          <Link
+            to="/"
             className="font-brand text-[22px] md:text-[26px] font-normal tracking-[0.35em] uppercase no-underline transition-colors duration-300 text-text-primary"
           >
             VEVE
-          </a>
+          </Link>
 
           {/* Center: Desktop nav links */}
           <div className="hidden md:flex items-center gap-10">
@@ -87,13 +88,13 @@ export const Nav = () => {
 
           {/* Right: Utility icons */}
           <div className="flex items-center gap-5">
-            <a
-              href="/admin"
+            <Link
+              to="/admin"
               className="hidden md:block transition-colors duration-300 text-text-primary hover:text-text-secondary"
               aria-label="Account"
             >
               <UserIcon />
-            </a>
+            </Link>
             <button
               onClick={() => setSearchOpen((prev) => !prev)}
               className="bg-transparent border-none cursor-pointer p-0 transition-colors duration-300 text-text-primary hover:text-text-secondary"

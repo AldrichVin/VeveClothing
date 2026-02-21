@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CATEGORIES, CATEGORY_LABELS } from '../../types/product'
 import { CloseIcon, ChevronDownIcon } from './NavIcons'
@@ -19,7 +20,7 @@ const linkVariants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.12 + i * 0.06, duration: 0.4, ease: 'easeOut' },
+    transition: { delay: 0.12 + i * 0.06, duration: 0.4, ease: 'easeOut' as const },
   }),
   exit: { opacity: 0, transition: { duration: 0.15 } },
 }
@@ -77,14 +78,14 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                     transition={{ duration: 0.25, ease: 'easeInOut' }}
                   >
                     {CATEGORIES.map((cat) => (
-                      <a
+                      <Link
                         key={cat}
-                        href={`#${cat}`}
+                        to={`/shop/${cat}`}
                         className="font-body text-text-secondary text-sm font-light tracking-[0.15em] uppercase no-underline"
                         onClick={onClose}
                       >
                         {CATEGORY_LABELS[cat]}
-                      </a>
+                      </Link>
                     ))}
                   </motion.div>
                 )}

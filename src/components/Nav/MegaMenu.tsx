@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CATEGORIES, CATEGORY_LABELS } from '../../types/product'
 
@@ -29,49 +30,57 @@ export const MegaMenu = ({ isOpen, onMouseEnter, onMouseLeave }: MegaMenuProps) 
               <p className="font-body text-[10px] font-normal tracking-[0.3em] uppercase text-text-accent mb-1">
                 Categories
               </p>
-              <a
-                href="#shop"
+              <Link
+                to="/"
                 className="font-body text-[13px] font-normal text-text-primary hover:text-text-accent transition-colors duration-200 no-underline"
               >
                 View All
-              </a>
+              </Link>
               {CATEGORIES.map((cat) => (
-                <a
+                <Link
                   key={cat}
-                  href={`#${cat}`}
+                  to={`/shop/${cat}`}
                   className="font-body text-[13px] font-normal text-text-secondary hover:text-text-primary transition-colors duration-200 no-underline"
                 >
                   {CATEGORY_LABELS[cat]}
-                </a>
+                </Link>
               ))}
             </div>
 
             {/* Right: Featured collections */}
             <div className="grid grid-cols-2 gap-5">
-              <a href="#new-arrivals" className="group block no-underline">
+              <Link to="/#new-arrivals" className="group block no-underline">
                 <div className="aspect-[4/5] overflow-hidden mb-3 bg-surface">
-                  <div className="w-full h-full bg-gradient-to-br from-surface to-bg-warm flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                    <span className="font-body text-[10px] text-text-accent tracking-[0.2em] uppercase">
-                      New In
-                    </span>
-                  </div>
+                  {/* Swap with Midjourney-generated "New Arrivals" photo */}
+                  <img
+                    src="/images/mega-new.jpg"
+                    alt="New Arrivals"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                  />
                 </div>
                 <p className="font-body text-[11px] font-normal tracking-[0.15em] uppercase text-text-primary group-hover:text-text-secondary transition-colors duration-200">
                   New Arrivals
                 </p>
-              </a>
-              <a href="#shop" className="group block no-underline">
+              </Link>
+              <Link to="/" className="group block no-underline">
                 <div className="aspect-[4/5] overflow-hidden mb-3 bg-bg-dark">
-                  <div className="w-full h-full bg-gradient-to-br from-bg-dark to-surface-dark flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                    <span className="font-body text-[10px] text-white/50 tracking-[0.2em] uppercase">
-                      Most Wanted
-                    </span>
-                  </div>
+                  {/* Swap with Midjourney-generated "Best Sellers" photo */}
+                  <img
+                    src="/images/mega-best.jpg"
+                    alt="Best Sellers"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                  />
                 </div>
                 <p className="font-body text-[11px] font-normal tracking-[0.15em] uppercase text-text-primary group-hover:text-text-secondary transition-colors duration-200">
                   Best Sellers
                 </p>
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>
