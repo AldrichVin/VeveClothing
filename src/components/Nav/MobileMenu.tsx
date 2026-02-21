@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { CATEGORIES, CATEGORY_LABELS } from '../../types/product'
+import { CloseIcon, ChevronDownIcon } from './NavIcons'
 
 interface MobileMenuProps {
   readonly isOpen: boolean
   readonly onClose: () => void
-  readonly links: readonly string[]
 }
 
 const overlayVariants = {
@@ -22,12 +24,14 @@ const linkVariants = {
   exit: { opacity: 0, transition: { duration: 0.15 } },
 }
 
-export const MobileMenu = ({ isOpen, onClose, links }: MobileMenuProps) => {
+export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
+  const [shopExpanded, setShopExpanded] = useState(false)
+
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-100 bg-bg flex flex-col items-center justify-center"
+          className="fixed inset-0 z-[100] bg-bg flex flex-col items-center justify-center"
           variants={overlayVariants}
           initial="hidden"
           animate="visible"
@@ -40,29 +44,94 @@ export const MobileMenu = ({ isOpen, onClose, links }: MobileMenuProps) => {
             onClick={onClose}
             aria-label="Close menu"
           >
-            <div className="relative w-5 h-5">
-              <span className="absolute top-1/2 left-0 w-full h-px bg-text-primary rotate-45" />
-              <span className="absolute top-1/2 left-0 w-full h-px bg-text-primary -rotate-45" />
-            </div>
+            <CloseIcon className="text-text-primary" />
           </button>
 
           {/* Links */}
           <nav className="flex flex-col items-center gap-8">
-            {links.map((link, i) => (
-              <motion.a
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                className="font-brand text-text-primary text-2xl font-light tracking-[0.2em] uppercase no-underline"
-                variants={linkVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                custom={i}
-                onClick={onClose}
+            {/* Shop with accordion */}
+            <motion.div
+              className="flex flex-col items-center"
+              variants={linkVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              custom={0}
+            >
+              <button
+                onClick={() => setShopExpanded((prev) => !prev)}
+                className="flex items-center gap-2 font-brand text-text-primary text-2xl font-light tracking-[0.2em] uppercase bg-transparent border-none cursor-pointer"
               >
-                {link}
-              </motion.a>
-            ))}
+                Shop
+                <ChevronDownIcon
+                  className={`transition-transform duration-300 ${shopExpanded ? 'rotate-180' : ''}`}
+                />
+              </button>
+              <AnimatePresence>
+                {shopExpanded && (
+                  <motion.div
+                    className="flex flex-col items-center gap-4 mt-4"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  >
+                    {CATEGORIES.map((cat) => (
+                      <a
+                        key={cat}
+                        href={`#${cat}`}
+                        className="font-body text-text-secondary text-sm font-light tracking-[0.15em] uppercase no-underline"
+                        onClick={onClose}
+                      >
+                        {CATEGORY_LABELS[cat]}
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* New Arrivals */}
+            <motion.a
+              href="#new-arrivals"
+              className="font-brand text-text-primary text-2xl font-light tracking-[0.2em] uppercase no-underline"
+              variants={linkVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              custom={1}
+              onClick={onClose}
+            >
+              New Arrivals
+            </motion.a>
+
+            {/* About */}
+            <motion.a
+              href="#about"
+              className="font-brand text-text-primary text-2xl font-light tracking-[0.2em] uppercase no-underline"
+              variants={linkVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              custom={2}
+              onClick={onClose}
+            >
+              About
+            </motion.a>
+
+            {/* Account */}
+            <motion.a
+              href="/admin"
+              className="font-brand text-text-primary text-2xl font-light tracking-[0.2em] uppercase no-underline"
+              variants={linkVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              custom={3}
+              onClick={onClose}
+            >
+              Account
+            </motion.a>
           </nav>
         </motion.div>
       )}
