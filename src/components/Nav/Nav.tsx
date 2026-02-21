@@ -28,22 +28,16 @@ export const Nav = () => {
   const openShop = useCallback(() => setShopHovered(true), [])
   const closeShop = useCallback(() => setShopHovered(false), [])
 
-  const navBg = scrolled || searchOpen
-    ? 'bg-white border-b border-border'
-    : 'bg-transparent border-b border-transparent'
-
-  const textColor = scrolled || searchOpen
-    ? 'text-text-primary'
-    : 'text-text-primary'
-
-  const linkColor = scrolled || searchOpen
-    ? 'text-text-secondary hover:text-text-primary'
-    : 'text-text-primary/70 hover:text-text-primary'
+  const isElevated = scrolled || searchOpen
 
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${navBg}`}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          isElevated
+            ? 'bg-white/95 backdrop-blur-sm border-b border-border shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
+            : 'bg-transparent border-b border-transparent'
+        }`}
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
@@ -56,7 +50,7 @@ export const Nav = () => {
           {/* Left: Logo */}
           <a
             href="/"
-            className={`font-brand text-[22px] md:text-[26px] font-normal tracking-[0.35em] uppercase no-underline transition-colors duration-300 ${textColor}`}
+            className="font-brand text-[22px] md:text-[26px] font-normal tracking-[0.35em] uppercase no-underline transition-colors duration-300 text-text-primary"
           >
             VEVE
           </a>
@@ -69,7 +63,7 @@ export const Nav = () => {
               onMouseLeave={closeShop}
             >
               <button
-                className={`group relative font-body text-[13px] font-light tracking-[0.2em] uppercase bg-transparent border-none cursor-pointer transition-colors duration-300 ${linkColor}`}
+                className="group relative font-body text-[12px] font-normal tracking-[0.2em] uppercase bg-transparent border-none cursor-pointer transition-colors duration-300 text-text-secondary hover:text-text-primary"
               >
                 Shop
                 <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-text-primary transition-all duration-300 ease-out group-hover:w-full" />
@@ -77,14 +71,14 @@ export const Nav = () => {
             </div>
             <a
               href="#new-arrivals"
-              className={`group relative font-body text-[13px] font-light tracking-[0.2em] uppercase no-underline transition-colors duration-300 ${linkColor}`}
+              className="group relative font-body text-[12px] font-normal tracking-[0.2em] uppercase no-underline transition-colors duration-300 text-text-secondary hover:text-text-primary"
             >
               New Arrivals
               <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-text-primary transition-all duration-300 ease-out group-hover:w-full" />
             </a>
             <a
               href="#about"
-              className={`group relative font-body text-[13px] font-light tracking-[0.2em] uppercase no-underline transition-colors duration-300 ${linkColor}`}
+              className="group relative font-body text-[12px] font-normal tracking-[0.2em] uppercase no-underline transition-colors duration-300 text-text-secondary hover:text-text-primary"
             >
               About
               <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-text-primary transition-all duration-300 ease-out group-hover:w-full" />
@@ -95,26 +89,26 @@ export const Nav = () => {
           <div className="flex items-center gap-5">
             <a
               href="/admin"
-              className={`hidden md:block transition-colors duration-300 ${textColor} hover:text-text-secondary`}
+              className="hidden md:block transition-colors duration-300 text-text-primary hover:text-text-secondary"
               aria-label="Account"
             >
               <UserIcon />
             </a>
             <button
               onClick={() => setSearchOpen((prev) => !prev)}
-              className={`bg-transparent border-none cursor-pointer p-0 transition-colors duration-300 ${textColor} hover:text-text-secondary`}
+              className="bg-transparent border-none cursor-pointer p-0 transition-colors duration-300 text-text-primary hover:text-text-secondary"
               aria-label="Search"
             >
               <SearchIcon />
             </button>
             <button
               onClick={() => setCartOpen(true)}
-              className={`relative bg-transparent border-none cursor-pointer p-0 transition-colors duration-300 ${textColor} hover:text-text-secondary`}
+              className="relative bg-transparent border-none cursor-pointer p-0 transition-colors duration-300 text-text-primary hover:text-text-secondary"
               aria-label="Shopping bag"
             >
               <BagIcon />
               {itemCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-text-primary text-white text-[9px] flex items-center justify-center font-body font-light">
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-text-primary text-white text-[9px] flex items-center justify-center font-body">
                   {itemCount}
                 </span>
               )}
@@ -125,16 +119,14 @@ export const Nav = () => {
               aria-label="Open menu"
               aria-expanded={menuOpen}
             >
-              <span className={`block w-[22px] h-px transition-colors duration-300 ${scrolled ? 'bg-text-primary' : 'bg-text-primary'}`} />
-              <span className={`block w-[22px] h-px transition-colors duration-300 ${scrolled ? 'bg-text-primary' : 'bg-text-primary'}`} />
+              <span className="block w-[22px] h-px bg-text-primary" />
+              <span className="block w-[22px] h-px bg-text-primary" />
             </button>
           </div>
         </div>
 
-        {/* Search panel (pushes content down) */}
         <SearchPanel isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
-        {/* Mega menu (absolute, overlays content) */}
         <MegaMenu
           isOpen={shopHovered}
           onMouseEnter={openShop}
@@ -142,15 +134,8 @@ export const Nav = () => {
         />
       </motion.nav>
 
-      <MobileMenu
-        isOpen={menuOpen}
-        onClose={() => setMenuOpen(false)}
-      />
-
-      <CartDrawer
-        isOpen={cartOpen}
-        onClose={() => setCartOpen(false)}
-      />
+      <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   )
 }
