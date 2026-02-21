@@ -1,12 +1,18 @@
-import { Nav } from './components/Nav/Nav'
-import { Hero } from './components/Hero/Hero'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { CartProvider } from './context/CartContext'
+import { HomePage } from './pages/HomePage'
+import { AdminPage } from './pages/AdminPage'
 
 const App = () => {
   return (
-    <>
-      <Nav />
-      <Hero />
-    </>
+    <CartProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+        </Routes>
+      </BrowserRouter>
+    </CartProvider>
   )
 }
 
