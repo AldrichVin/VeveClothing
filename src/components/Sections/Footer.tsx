@@ -2,14 +2,14 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-text-primary text-white">
+    <footer className="bg-bg-dark text-white">
       <div
-        className="py-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8"
-        style={{ padding: '3rem clamp(24px, 6vw, 120px)' }}
+        className="py-14 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8"
+        style={{ padding: '3.5rem clamp(24px, 6vw, 120px)' }}
       >
         <a
           href="/"
-          className="font-brand text-[20px] font-normal tracking-[0.35em] uppercase text-white no-underline"
+          className="font-brand text-[22px] font-normal tracking-[0.35em] uppercase text-white no-underline"
         >
           VEVE
         </a>
@@ -19,7 +19,7 @@ export const Footer = () => {
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
-              className="font-body text-[11px] font-light tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors duration-300 no-underline"
+              className="font-body text-[11px] font-normal tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors duration-300 no-underline"
             >
               {link}
             </a>
@@ -31,7 +31,7 @@ export const Footer = () => {
         className="border-t border-white/10 py-6 flex items-center justify-center"
         style={{ padding: '1.5rem clamp(24px, 6vw, 120px)' }}
       >
-        <p className="font-body text-[10px] font-light tracking-[0.15em] text-white/40">
+        <p className="font-body text-[10px] font-light tracking-[0.15em] text-white/30">
           &copy; {currentYear} VEVE. All rights reserved.
         </p>
       </div>
