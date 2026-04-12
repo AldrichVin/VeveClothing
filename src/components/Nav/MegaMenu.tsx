@@ -51,15 +51,12 @@ export const MegaMenu = ({ isOpen, onMouseEnter, onMouseLeave }: MegaMenuProps) 
             <div className="grid grid-cols-2 gap-5">
               <Link to="/#new-arrivals" className="group block no-underline">
                 <div className="aspect-[4/5] overflow-hidden mb-3 bg-surface">
-                  {/* Swap with Midjourney-generated "New Arrivals" photo */}
-                  <img
-                    src="/images/mega-new.jpg"
-                    alt="New Arrivals"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none'
-                    }}
-                  />
+                  {/* Replace bg-surface with <img> once Midjourney photo is ready */}
+                  <div className="w-full h-full bg-gradient-to-br from-surface to-bg-warm flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                    <span className="font-body text-[10px] text-text-accent tracking-[0.2em] uppercase">
+                      New In
+                    </span>
+                  </div>
                 </div>
                 <p className="font-body text-[11px] font-normal tracking-[0.15em] uppercase text-text-primary group-hover:text-text-secondary transition-colors duration-200">
                   New Arrivals
@@ -67,15 +64,12 @@ export const MegaMenu = ({ isOpen, onMouseEnter, onMouseLeave }: MegaMenuProps) 
               </Link>
               <Link to="/" className="group block no-underline">
                 <div className="aspect-[4/5] overflow-hidden mb-3 bg-bg-dark">
-                  {/* Swap with Midjourney-generated "Best Sellers" photo */}
-                  <img
-                    src="/images/mega-best.jpg"
-                    alt="Best Sellers"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none'
-                    }}
-                  />
+                  {/* Replace bg-bg-dark with <img> once Midjourney photo is ready */}
+                  <div className="w-full h-full bg-gradient-to-br from-bg-dark to-surface-dark flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                    <span className="font-body text-[10px] text-white/50 tracking-[0.2em] uppercase">
+                      Most Wanted
+                    </span>
+                  </div>
                 </div>
                 <p className="font-body text-[11px] font-normal tracking-[0.15em] uppercase text-text-primary group-hover:text-text-secondary transition-colors duration-200">
                   Best Sellers
