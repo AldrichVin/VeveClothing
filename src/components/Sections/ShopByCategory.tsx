@@ -3,11 +3,11 @@ import { motion } from 'framer-motion'
 import { CATEGORIES, CATEGORY_LABELS } from '../../types/product'
 import type { Category } from '../../types/product'
 
-const CATEGORY_IMAGES: Record<Category, string> = {
+const CATEGORY_IMAGES: Record<Category, string | null> = {
   top: 'https://cdn.midjourney.com/3e4df5b4-7ce4-419d-b43d-c4752de8d4ec/0_3.png',
-  bottom: '/images/cat-bottom.jpg',
-  outerwear: '/images/cat-outerwear.jpg',
-  dress: '/images/cat-dress.jpg',
+  bottom: null,
+  outerwear: null,
+  dress: null,
 }
 
 const CATEGORY_FALLBACK_BG: Record<Category, string> = {
@@ -54,16 +54,16 @@ export const ShopByCategory = () => {
                 className="block w-full h-full no-underline"
               >
                 {/* Category image — swap with Midjourney-generated photo */}
-                <img
-                  src={CATEGORY_IMAGES[category]}
-                  alt={CATEGORY_LABELS[category]}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  onError={(e) => {
-                    const target = e.currentTarget
-                    target.style.display = 'none'
-                    target.parentElement!.style.backgroundColor = CATEGORY_FALLBACK_BG[category]
-                  }}
-                />
+                {CATEGORY_IMAGES[category] && (
+                  <img
+                    src={CATEGORY_IMAGES[category]}
+                    alt={CATEGORY_LABELS[category]}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                  />
+                )}
                 {/* Fallback bg in case image hasn't loaded */}
                 <div
                   className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105 -z-10"
