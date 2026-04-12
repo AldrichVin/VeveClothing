@@ -22,6 +22,7 @@ export const CampaignBanner = () => {
           src="https://cdn.midjourney.com/20cfb63f-3dca-4d94-a4f3-8a26981ed1bd/0_2.png"
           alt="The Linen Collection campaign"
           className="absolute inset-0 w-full h-full object-cover"
+          onError={(e) => { e.currentTarget.style.display = 'none' }}
         />
         {/* Dark overlay for text legibility */}
         <div className="absolute inset-0 bg-black/40" />
